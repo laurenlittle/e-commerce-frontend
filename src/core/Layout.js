@@ -1,10 +1,12 @@
 import React from 'react';
+import Menu from './Menu';
 
 // Reusable layout to receive props from other pages
-const Layout = ({title='Title', description='description', className, children}) => (
+const Layout = ({ title = 'Title', description = 'description', className, children }) => (
 
   <div>
-    <div className='jumbrotron'>
+    <Menu />
+    <div className='jumbotron'>
       <h2>{title}</h2>
       <p className='lead'>{description}</p>
     </div>
