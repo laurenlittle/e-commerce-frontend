@@ -55,7 +55,7 @@ const Signup = () => {
         <label className='text-muted'>Email</label>
         <input
           className='form-control'
-          type='text'
+          type='email'
           value={email}
           onChange={handleChange('email')}
         />
