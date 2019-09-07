@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Layout from '../core/Layout';
-import { signin } from '../auth/index';
+import { signin, authenticate } from '../auth/index';
 
 
 const Signin = () => {
@@ -29,9 +29,11 @@ const Signin = () => {
       if(data.error) {
         setFormValues({...formValues, error: data.error, isLoading: false})
       } else {
-        setFormValues({
-          ...formValues,
-          redirectToReferrer: true
+        authenticate(data, () => {
+          setFormValues({
+            ...formValues,
+            redirectToReferrer: true
+          });
         });
       }
     })

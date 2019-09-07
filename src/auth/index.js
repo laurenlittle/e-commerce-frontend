@@ -38,3 +38,13 @@
       })
 
   };
+
+  export const authenticate = (data, next) => {
+    // Local storage = part of browser's window object
+    if(typeof window !== 'undefined') {
+                            // key name and what to save in key
+      localStorage.setItem('jwt', JSON.stringify(data))
+    }
+
+    next(); // callback used in Signin
+  }
