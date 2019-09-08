@@ -48,3 +48,31 @@
 
     next(); // callback used in Signin
   }
+
+  export const signout = (next) => {
+     if (typeof window !== 'undefined') {
+       // clear local storage
+       localStorage.removeItem('jwt');
+
+       next();
+
+       return fetch(`${API}/signout`, {
+         method: 'GET'
+       })
+       .then(response => console.log('Signout', response))
+       .catch(error => console.log(error))
+     }
+  }
+
+  export const isAuthenticated = () => {
+      if (typeof window == 'undefined') {
+        return false
+      }
+
+      if (localStorage.getItem('jwt')) {
+
+        return JSON.parse(localStorage.getItem('jwt'));
+      } else {
+        return false
+      }
+  }
