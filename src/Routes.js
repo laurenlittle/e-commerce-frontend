@@ -4,6 +4,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Signup from '../src/user/Signup';
 import Signin from '../src/user/Signin';
 import Home from '../src/core/Home';
+import PrivateRoute from './auth/PrivateRoute';
+import UserDashboard from './user/UserDashboard';
 
 const Routes = () => {
 
@@ -13,6 +15,7 @@ const Routes = () => {
         <Route path="/" exact component={Home} />
         <Route path="/signin" exact component={Signin} />
         <Route path="/signup" exact component={Signup} />
+        <PrivateRoute path="/dashboard" exact component={UserDashboard} />
       </Switch>
     </BrowserRouter>
   )
