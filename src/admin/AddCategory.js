@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth/index';
@@ -12,19 +12,22 @@ const AddCategory = () => {
   // destructure user and info from local storage
   const { user, token } = isAuthenticated();
 
-  const handleChange = event => {
+  const handleChange = e => {
     setError('');
-    setName(event.target.value);
+    setName(e.target.value);
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = e => {
+    e.preventDefault();
+
     setError('');
     setSuccess(false);
 
-    createCategory(user._id, token, {name})
+    // make API request
+    createCategory(user._id, token, { name })
     .then(data => {
       if(data.error) {
-        setError(data.error);
+        setError(true);
       } else {
         setError('');
         setSuccess(true);
@@ -38,11 +41,18 @@ const AddCategory = () => {
     }
   };
 
+  // TODO - fix display on Front End
   const showError = () => {
     if(error) {
-      return <h3 className='text-danger'>{name} is not unique.</h3>
+      return <h3 className='text-danger'>Category is not unique.</h3>
     }
   };
+
+  const goBack = () => (
+    <div className='mt-5'>
+      <Link to='/admin/dashboard' className='text-warning'> Back to Dashboard</Link>
+    </div>
+  );
 
   const addCategoryForm = () => (
     <form onSubmit={handleSubmit}>
@@ -54,7 +64,8 @@ const AddCategory = () => {
           type='text'
           value={name}
           onChange={handleChange}
-          autofocus
+          autoFocus
+          required
           />
       </div>
 
@@ -64,13 +75,14 @@ const AddCategory = () => {
 
 
   return (
-    <Layout title='Add Category' description='Describe the category of this product'>
+    <Layout title='Add Category' description='Label the category of this product'>
 
-      {/* {showError()}
-      {showSucces()} */}
       <div className='row'>
         <div className='col-md-8 offset-2'>
+          {showSuccess()}
+          {showError()}
           {addCategoryForm()}
+          {goBack()}
         </div>
       </div>
     </Layout>
