@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth/index';
-import { createProduct } from './apiAdmin';
+import { createProduct, getCategories } from './apiAdmin';
 
 
 
@@ -45,10 +45,29 @@ const AddProduct = () => {
     formData
   } = values;
 
+  // Load Categories and have FormData API (from browser) available as soon as component mounts
+  const init = () => {
+    // make API request
+    getCategories()
+    .then(data => {
+      if (data.error) {
+        setValues({
+          ...values,
+          error: data.error
+        })
+        console.log(data.error)
+      } else {
+        setValues({
+          ...values,
+          categories: data,
+          formData: new FormData()
+        })
+      }
+    })
+  };
 
-  // useEffect to have FormData API (from browser) available as soon as component mounts
   useEffect(() => {
-    setValues({...values, formData: new FormData()})
+    init();
   }, []);
 
   const handleChange = name => e => {
@@ -177,7 +196,9 @@ const AddProduct = () => {
                 <option value={category}>{category}</option>
               })
             } */}
-            <option value={category}>Python</option>
+            <option value='5d69b4c789ec579355fa6dd2'>Python</option>
+            <option value ='5d69b4c789ec579355fa6dd2'>PHP</option>
+            <option value='5d69b4c789ec579355fa6dd2'>Node</option>
           </select>
       </div>
 
