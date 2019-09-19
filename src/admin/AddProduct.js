@@ -26,9 +26,7 @@ const AddProduct = () => {
     formData: ''
   });
 
-
   const {user, token } = isAuthenticated();
-  console.log(user);
 
   const {
     name,
@@ -55,11 +53,10 @@ const AddProduct = () => {
           ...values,
           error: data.error
         })
-        console.log(data.error)
       } else {
         setValues({
           ...values,
-          categories: data,
+          categories: data.categories,
           formData: new FormData()
         })
       }
@@ -128,7 +125,6 @@ const AddProduct = () => {
   // }
 
   // TODO - only name, photo, description, quantity, and price sent in headers
-  // Error - all fields required
   const newPostForm = () => (
 
     <form
@@ -158,7 +154,6 @@ const AddProduct = () => {
           type='text'
           value={name}
           onChange={handleChange('name')}
-          required
           />
       </div>
 
@@ -180,7 +175,6 @@ const AddProduct = () => {
           type='number'
           value={price}
           onChange={handleChange('price')}
-          required
           />
       </div>
 
@@ -191,14 +185,13 @@ const AddProduct = () => {
             className='form-control'
             onChange={handleChange('category')}
           >
-            {/* {
-              categories.map(category => {
-                <option value={category}>{category}</option>
+            <option>Please Select</option>
+            {
+              categories &&
+                categories.map((category, index) => {
+                  return (<option key={index} value={category._id}>{category.name}</option>)
               })
-            } */}
-            <option value='5d69b4c789ec579355fa6dd2'>Python</option>
-            <option value ='5d69b4c789ec579355fa6dd2'>PHP</option>
-            <option value='5d69b4c789ec579355fa6dd2'>Node</option>
+            }
           </select>
       </div>
 
@@ -210,7 +203,6 @@ const AddProduct = () => {
           type='number'
           value={quantity}
           onChange={handleChange('quantity')}
-          required
           />
       </div>
 
@@ -221,6 +213,7 @@ const AddProduct = () => {
             className='form-control'
             onChange={handleChange('shipping')}
           >
+            <option>Please Select</option>
             <option value='0'>No</option>
             <option value='1'>Yes</option>
           </select>
@@ -231,11 +224,33 @@ const AddProduct = () => {
     </form>
   );
 
+  const showError = () => (
+    <div className='alert alert-danger' style={{display: error ? '' : 'none'}}>
+      {error}
+    </div>
+  );
+
+  // TODO - fix display on Front End
+  const showSuccess = () => (
+    <div className='alert alert-success' style={{display: createdProduct ? '' : 'none'}}>
+      <h2>`${createdProduct} has been created successfully!`</h2>
+    </div>
+  );
+
+  const showLoading = () => (
+    loading && (<div className='alert alert-info'>
+      <h2>Loading...</h2>
+    </div>)
+  );
+
   return (
       <Layout title='Add Product' description='Add a product'>
 
       <div className='row'>
         <div className='col-md-8 offset-2'>
+          {showError()}
+          {showSuccess()}
+          {showLoading()}
           {newPostForm()}
         </div>
       </div>
