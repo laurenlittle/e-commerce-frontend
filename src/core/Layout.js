@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from './Menu';
+import '../styles.css';
 
 // Reusable layout to receive props from other pages
 const Layout = ({ title = 'Title', description = 'description', className, children }) => (
