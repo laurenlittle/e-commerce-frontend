@@ -20,6 +20,17 @@ const Shop = () => {
         }
       })
   };
+ 
+
+  /* ----------------------
+   * @params
+   * filters - type: String (Category Id or)
+   * filterBy - type: String (price or category)
+   * ---------------------- */
+
+  const handleFilters = (filters, filterBy) => {
+    console.log('SHOPPPPPP',filters, filterBy);
+  }
 
   useEffect(() => {
     init();
@@ -32,7 +43,7 @@ const Shop = () => {
       <div className='col-4'>
         <h4>Filter by Category</h4>
         <ul>
-          <Checkbox categories={categories} />
+          <Checkbox categories={categories} handleFilters={filters => handleFilters(filters, 'category')} />
         </ul>
       </div>
       <div className='col-8'>
