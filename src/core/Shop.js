@@ -3,6 +3,7 @@ import Layout from './Layout';
 import Card from './Card';
 import { getCategories } from './apiCore';
 import Checkbox from './Checkbox';
+import { prices } from './fixedPrices';
 
 const Shop = () => {
 
@@ -61,7 +62,12 @@ const Shop = () => {
       </div>
       <div className='col-8'>
         right sidebar
-        {JSON.stringify(selectedFilters)}
+        {/* {JSON.stringify(selectedFilters)} */}
+        {prices.map(priceRange => {
+          return(
+            <p>{priceRange.name}</p>
+          )
+        })}
       </div>
 
     </div>
