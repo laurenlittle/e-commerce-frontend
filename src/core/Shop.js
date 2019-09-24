@@ -7,6 +7,12 @@ import Checkbox from './Checkbox';
 const Shop = () => {
 
   const [categories, setCategories] = useState([]);
+  const [selectedFilters, setFilters] = useState({
+    filters: {
+      category: [], // array of category Ids
+      price: [] // Price Range
+    }
+  })
   const [error, setError] = useState(false);
 
   const init = () => {
@@ -20,7 +26,7 @@ const Shop = () => {
         }
       })
   };
- 
+
 
   /* ----------------------
    * @params
@@ -29,7 +35,14 @@ const Shop = () => {
    * ---------------------- */
 
   const handleFilters = (filters, filterBy) => {
-    console.log('SHOPPPPPP',filters, filterBy);
+    // console.log('SHOPPPPPP',filters, filterBy);
+
+    const newFilters = {...selectedFilters};
+
+                  // State Object
+    newFilters.filters[filterBy] = filters;
+                                    // Function Args
+    setFilters(newFilters); // value to be sent to backend
   }
 
   useEffect(() => {
@@ -48,6 +61,7 @@ const Shop = () => {
       </div>
       <div className='col-8'>
         right sidebar
+        {JSON.stringify(selectedFilters)}
       </div>
 
     </div>
