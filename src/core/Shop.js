@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Layout from './Layout';
 import Card from './Card';
-import { getCategories } from './apiCore';
+import { getCategories, getFilteredProducts } from './apiCore';
 import Checkbox from './Checkbox';
 import RadioButton from './RadioButton';
 import { prices } from './fixedPrices';
@@ -16,6 +16,11 @@ const Shop = () => {
     }
   })
   const [error, setError] = useState(false);
+  const [limit, setLimit] = useState(6);
+  const [skip, setSkip] = useState(0);
+  const [filteredResults, setfilteredResults] = useState([]);
+
+  console.log(filteredResults);
 
   const init = () => {
     // make API request
@@ -29,6 +34,22 @@ const Shop = () => {
       })
   };
 
+  const loadFilteredResults = (myFilters) => {
+    // make API request
+    getFilteredProducts(skip, limit, myFilters)
+    .then(data => {
+      if (data.error) {
+        setError(data.error);
+      }  else {
+        setfilteredResults(data.data);
+      }
+    })
+  };
+
+  useEffect(() => {
+    init();
+    loadFilteredResults(skip, limit, selectedFilters.filters);
+  }, []);
 
   /* ----------------------
    * @params
@@ -42,12 +63,14 @@ const Shop = () => {
                   // State Object
     newFilters.filters[filterBy] = filters;
                                     // Function Args
-    setFilters(newFilters); // value to be sent to backend
 
     if(filterBy === 'price') {
       let priceValues = handlePrice(filters);
       newFilters.filters[filterBy] = priceValues;
     }
+
+    loadFilteredResults(selectedFilters.filters);
+    setFilters(newFilters); // value to be sent to backend
   }
 
   const handlePrice = value => {
@@ -64,9 +87,6 @@ const Shop = () => {
     return array;
   }
 
-  useEffect(() => {
-    init();
-  }, []);
 
   return (
   <Layout title='Shop' description='Books for all your programming needs' className='container-fluid'>
@@ -86,8 +106,15 @@ const Shop = () => {
       </div>
 
       <div className='col-8'>
-        right sidebar
-         {JSON.stringify(selectedFilters)}
+        <h2 className='mb-4'> Products</h2>
+         <div className='row'>
+          {
+            filteredResults.map(result => {
+              return <Card key={result._id} product={result}/>
+            })
+          }
+        </div>
+
       </div>
 
     </div>
