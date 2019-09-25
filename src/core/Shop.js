@@ -17,6 +17,7 @@ const Shop = () => {
   })
   const [error, setError] = useState(false);
   const [limit, setLimit] = useState(6);
+  const [size, setSize] = useState(0);
   const [skip, setSkip] = useState(0);
   const [filteredResults, setfilteredResults] = useState([]);
 
@@ -42,9 +43,35 @@ const Shop = () => {
         setError(data.error);
       }  else {
         setfilteredResults(data.data);
+        setSize(data.size);
+        setSkip(0);
       }
     })
   };
+
+  const loadMore = () => {
+
+    let SkipTo = skip + limit;
+    // make API request
+    getFilteredProducts(SkipTo, limit, selectedFilters.filters)
+      .then(data => {
+        if (data.error) {
+          setError(data.error);
+        } else {
+          setfilteredResults([...filteredResults, ...data.data]); // mix of old/new data
+          setSize(data.size);
+          setSkip(SkipTo);
+        }
+      })
+    };
+
+  const loadMoreButton = () => {
+    return (
+      size > 0 && size >= limit && (
+        <button onClick={loadMore} className='btn btn-secondary'>Load More</button>
+      )
+    )
+  }
 
   useEffect(() => {
     init();
@@ -114,7 +141,8 @@ const Shop = () => {
             })
           }
         </div>
-
+        <hr />
+        {loadMoreButton()}
       </div>
 
     </div>
