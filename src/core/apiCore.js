@@ -1,4 +1,5 @@
 import { API } from '../config';
+import queryString from 'query-string';
 
 
 export const getProducts = (sortBy) => {
@@ -45,4 +46,21 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
     .catch(error => {
       console.log(error);
     });
+};
+
+export const listProductsBySearchParams = (params) => {
+
+  // Use package to create querys tring from search params
+  const query = queryString.stringify(params);
+  console.log('query', query);
+
+  return fetch(`${API}/products?${query}`, {
+      method: 'GET',
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+      console.log(error);
+    })
 };

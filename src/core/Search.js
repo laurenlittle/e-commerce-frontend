@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Card from './Card';
-import { getProducts, getCategories } from './apiCore';
+import { getProducts, getCategories, listProductsBySearchParams } from './apiCore';
 
 
 const Search = () => {
@@ -30,12 +30,33 @@ const Search = () => {
       })
   };
 
-  const searchSubmit = () => {
-    // TODO
+  const searchData = () => {
+    // console.log(search, category)
+    if(search) {
+      // make API request
+      listProductsBySearchParams({search: search || undefined, category})
+      .then(response => {
+        if (response.error) {
+          setError(response.error)
+        } else {
+          setData({
+            ...data,
+            results: response,
+            searched: true
+          });
+        }
+      })
+    }
   };
 
-  const handleChange = () => {
-    // TODO
+  const searchSubmit = event => {
+    event.preventDefault();
+    searchData();
+  };
+
+                        // 'category' or 'search'
+  const handleChange = name => event => {
+    setData({...data, [name]: event.target.value, searched: false})
   };
 
   const searchForm = () => (
@@ -78,6 +99,10 @@ const Search = () => {
     <div className='row'>
       <div className='container mb-3'>
         {searchForm()}
+        {JSON.stringify(results)}
+      </div>
+      <div className='container-fluid mb-3'>
+        {searchedProducts(results)}
       </div>
 
     </div>
