@@ -59,17 +59,33 @@ const Search = () => {
     setData({...data, [name]: event.target.value, searched: false})
   };
 
+  const searchMessage = (searched, results) => {
+    if(searched && results.length > 0) {
+      return `Found ${results.length} Products.`;
+    }
+
+    if(searched && results.length < 1) {
+      return `No products found. Please try your search again.`;
+    }
+
+  };
+
   const searchedProducts = (results = []) => {
     return(
+      <div>
+        <h2 className='mt-4 mb-4'>
+          {searchMessage(searched, results)}
+        </h2>
+        <div className='row'>
+          {
+            results.map(result => {
+              return <Card key={result._id} product={result} />
+            })
+          }
 
-      <div className='row'>
-        {
-          results.map(result => {
-            return <Card key={result._id} product={result} />
-          })
-        }
-
+        </div>
       </div>
+
     )
   }
 
@@ -80,7 +96,7 @@ const Search = () => {
         <div className='input-group input-group-lg'>
           <div className='input-group-prepend'>
             <select className='btn mr-2' onChange={handleChange('category')}>
-              <option value="All">Select a Category </option>
+              <option value="All">All Categories </option>
               {
                 categories && categories.map(category => (
                   <option key={category._id} value={category._id}>{category.name}</option>
