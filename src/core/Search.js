@@ -34,7 +34,7 @@ const Search = () => {
     // console.log(search, category)
     if(search) {
       // make API request
-      listProductsBySearchParams({search: search || undefined, category})
+      listProductsBySearchParams({search: search || undefined, category: category})
       .then(response => {
         if (response.error) {
           setError(response.error)
@@ -59,7 +59,7 @@ const Search = () => {
     setData({...data, [name]: event.target.value, searched: false})
   };
 
-  const searchedProducts = (results=[]) => {
+  const searchedProducts = (results = []) => {
     return(
 
       <div className='row'>

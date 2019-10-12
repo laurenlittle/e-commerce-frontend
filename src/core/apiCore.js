@@ -48,7 +48,7 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
     });
 };
 
-export const listProductsBySearchParams = (params) => {
+export const listProductsBySearchParams = params => {
 
   // Use package to create querys tring from search params
   const query = queryString.stringify(params);
