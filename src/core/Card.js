@@ -15,7 +15,7 @@ const Card = ({product}) => {
           <ShowImage item={product} url='product' />
           <p> {product.description.substring(0,50)} </p>
           <p> {product.price} </p>
-          <Link to='/'>
+          <Link to={`/product/${product._id}`}>
             <button className='btn btn-outline-primary mb-2 mt-2 mr-4'>
               View Product
             </button>
