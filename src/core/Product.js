@@ -39,7 +39,7 @@ const Product = props => {
       {
         product &&
         product.description &&
-      <Card product={product} />
+      <Card product={product} showViewProductButton={false} />
       }
     </div>
   </Layout>
