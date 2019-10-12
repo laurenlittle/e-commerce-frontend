@@ -48,18 +48,23 @@ const Home = () => {
     <h2 className='mb-4'>New Arrivals</h2>
     <div className='row'>
       {
-        productsbyArrival.map(product => {
-          return <Card key={product._id} product={product} />
-        })
+        productsbyArrival.map(product => (
+          <div className='col-4 mb-3' key={product._id}>
+             <Card product={product} />
+          </div>
+          )
+        )
       }
     </div>
 
     <h2 className='mb-4'>Best Sellers</h2>
     <div className='row'>
       {
-        productsSold.map(product => {
-          return <Card key={product._id} product={product} />
-        })
+        productsSold.map(product => (
+          <div className='col-4 mb-3' key={product._id}>
+            <Card product={product} />
+          </div>
+        ))
       }
     </div>
 

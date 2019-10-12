@@ -6,7 +6,6 @@ import ShowImage from './ShowImage';
 const Card = ({product}) => {
   return (
 
-    <div className='col-4 mb-3'>
       <div className='card'>
         <div className='card-header'>
           {product.name}
@@ -28,8 +27,6 @@ const Card = ({product}) => {
         </div>
 
       </div>
-
-    </div>
   )
 };
 
