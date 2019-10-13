@@ -84,3 +84,23 @@
 .product-image {
   min-height: 100px;
 }
+
+.name {
+  background: indigo;
+  color: white;
+  font-weight: bold;
+}
+
+.black-10 {
+  color: #222;
+  font-weight: bold;
+}
+
+.black-9 {
+  color: #444;
+  font-weight: bold;
+}
+
+.black-8 {
+  color: #888;
+}
