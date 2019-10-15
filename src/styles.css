@@ -104,3 +104,17 @@
 .black-8 {
   color: #888;
 }
+
+/* ---------------------
+ *   Card Styles
+ * --------------------- */
+
+.cart-badge,
+.cart-badge:hover {
+  border-radius: 45%;
+  padding: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  background: #fff;
+  color: #007bff;
+}

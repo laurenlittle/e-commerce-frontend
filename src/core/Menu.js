@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { signout, isAuthenticated } from '../auth/index';
+import { getItemTotal } from '../cart/helpers/cartHelpers';
 
 const isActive = (history, path) => {
 
@@ -58,6 +59,12 @@ const Menu = ({history}) => (
           </span>
         </li>
       )}
+
+      <li className='nav-item'>
+        <Link className='nav-link' style={isActive(history, '/cart')} to='/cart'>
+          Cart <sup><small className='cart-badge'>{getItemTotal()}</small></sup>
+        </Link>
+      </li>
 
     </ul>
   </div>
