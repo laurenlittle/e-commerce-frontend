@@ -5,7 +5,7 @@ import moment from 'moment';
 import { addItem } from '../cart/helpers/cartHelpers';
 
 
-const Card = ({product, showViewProductButton = true}) => {
+const Card = ({product, showViewProductButton = true, showCartButton = true}) => {
 
   const [redirect, setRedirect] = useState(false);
 
@@ -42,13 +42,15 @@ const Card = ({product, showViewProductButton = true}) => {
     }
   };
 
-  const showAddToCartButton = () => {
-    return (
+  const showAddToCartButton = showCartButton => {
+    return ( showCartButton && (
+
        <Link to='/'>
           <button onClick={addToCart} className='btn btn-outline-warning mb-2 mt-2'>
             Add to Cart
           </button>
         </Link>
+      )
     );
   };
 
@@ -69,7 +71,7 @@ const Card = ({product, showViewProductButton = true}) => {
           <br/>
 
           {showViewButton(showViewProductButton)}
-          {showAddToCartButton()}
+          {showAddToCartButton(showCartButton)}
 
         </div>
 

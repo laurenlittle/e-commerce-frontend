@@ -24,7 +24,7 @@ const Cart = () => {
               key={item._id}
               product={item}
               showViewProductButton={true}
-              // showViewProductButton={false}
+              showCartButton={false}
             />
           ))
         }
