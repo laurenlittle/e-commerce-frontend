@@ -25,6 +25,7 @@ const Cart = () => {
               product={item}
               showViewProductButton={true}
               showCartButton={false}
+              cartUpdate={true}
             />
           ))
         }
@@ -41,7 +42,7 @@ const Cart = () => {
         </h2>
       )
     }
-  }
+  };
 
   return(
     <Layout
