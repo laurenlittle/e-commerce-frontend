@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import Layout from '../core/Layout';
 import { Link } from 'react-router-dom';
 import Card from '../core/Card';
@@ -7,10 +7,11 @@ import { getCart } from './helpers/cartHelpers';
 
 const Cart = () => {
   const [items, setItems] = useState([]);
+  const [run, setRun] = useState(false);
 
   useEffect(() => {
     setItems(getCart());
-  }, []);
+  }, [run]);
 
   const showItems = items => {
     return (
@@ -26,6 +27,9 @@ const Cart = () => {
               showViewProductButton={true}
               showCartButton={false}
               cartUpdate={true}
+              showRemoveProductButton={true}
+              setRun={setRun}
+              run={run}
             />
           ))
         }
@@ -33,7 +37,7 @@ const Cart = () => {
     )
   };
 
-  const cartEmpty = () => {
+  const cartEmpty = items => {
     if(!items) {
       return (
         <h2>
