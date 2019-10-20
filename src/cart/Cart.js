@@ -2,6 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import Layout from '../core/Layout';
 import { Link } from 'react-router-dom';
 import Card from '../core/Card';
+import Checkout from './Checkout';
 import { getCart } from './helpers/cartHelpers';
 
 
@@ -59,9 +60,9 @@ const Cart = () => {
           {items.length > 0 ? showItems(items) : cartEmpty()}
         </div>
         <div className='col-xs-12 col-sm-6'>
-          <p>
-            TODO: checkout options, shipping, price etc.
-          </p>
+          <h2 className='mb-4'> Your Cart Summary</h2>
+          <hr/>
+          <Checkout products={items} />
         </div>
 
       </div>
