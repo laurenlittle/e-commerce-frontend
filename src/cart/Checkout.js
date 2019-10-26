@@ -7,10 +7,11 @@ import {
     getBraintreeClientToken,
     processPayment
 } from './apiCart';
+import { emptyCart } from './helpers/cartHelpers';
 import DropIn from 'braintree-web-drop-in-react';
 import 'braintree-web';
 
-const Checkout = ({ products }) => {
+const Checkout = ({ products, setRun = f => f, run = undefined }) => {
     const [data, setData] = useState({
         success: false,
         clientToken: null,
@@ -79,7 +80,10 @@ const Checkout = ({ products }) => {
                     .then(response => {
                         // console.log(response);
                         setData({ ...data, success: response.success });
-                        // empty cart
+                        emptyCart(()=> {
+                          setRun(!run); // update parent state to show cart empty
+                          console.log('payment successful, cart empty');
+                        })
                         // create order POST req
                     })
                     .catch(error => console.log(error));
