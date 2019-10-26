@@ -77,10 +77,10 @@ const Checkout = ({ products }) => {
 
                 processPayment(userId, token, paymentData)
                     .then(response => {
-                        console.log(response)
-                        // setData({ ...data, success: response.success });
+                        // console.log(response);
+                        setData({ ...data, success: response.success });
                         // empty cart
-                        // create order
+                        // create order POST req
                     })
                     .catch(error => console.log(error));
             })
