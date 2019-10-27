@@ -7,6 +7,7 @@ import {
     getBraintreeClientToken,
     processPayment
 } from './apiCart';
+import { createOrder } from '../orders/apiOrders';
 import { emptyCart } from './helpers/cartHelpers';
 import DropIn from 'braintree-web-drop-in-react';
 import 'braintree-web';
@@ -80,6 +81,15 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
                 processPayment(userId, token, paymentData)
                     .then(response => {
                         // console.log(response);
+                        const orderData = {
+                            products: products,
+                            transaction_id: response.transaction.id,
+                            amount: response.transaction.amount,
+                            address: data.address
+                        };
+
+                        createOrder(userId, token, orderData);
+
                         setData({ ...data, success: response.success });
                         emptyCart(()=> {
                           setRun(!run); // update parent state to show cart empty
@@ -87,7 +97,6 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
                           setData( { loading: false } );
 
                         })
-                        // create order POST req
                     })
                     .catch(error => {
                       console.log(error);
@@ -99,6 +108,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
                 setData({ ...data, error: error.message });
             });
     };
+
      const showError = error => (
         <div
             className='alert alert-danger'
@@ -108,10 +118,24 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
         </div>
     );
 
+    const handleAddress = event => {
+        setData({ ...data, address: event.target.value})
+    };
+
     const showDropIn = () => (
         <div onBlur={() => setData({ ...data, error: '' })}>
             {data.clientToken !== null && products.length > 0 ? (
                 <div>
+                    <div className='form-group mb-3'>
+                        <label className='text-muted' for='address'> Delivery address:</label>
+                        <textarea //TODO update address object to use individual fields for Street,City,Country, Zip
+                            className='form-control'
+                            id='address'
+                            onChange={handleAddress}
+                            value={data.address}
+                            placeholder='Type delivery address here...'
+                        />
+                    </div>
                     <DropIn
                         options={{
                             authorization: data.clientToken,
