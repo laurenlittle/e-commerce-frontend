@@ -60,6 +60,8 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
         );
     };
 
+    let deliveryAddress = data.address;
+
     const purchaseItems = () => {
         setData( { loading: true } );
         // send the nonce to your server
@@ -78,6 +80,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
                     amount: getTotal(products)
                 };
 
+                // make API request
                 processPayment(userId, token, paymentData)
                     .then(response => {
                         // console.log(response);
@@ -85,16 +88,16 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
                             products: products,
                             transaction_id: response.transaction.id,
                             amount: response.transaction.amount,
-                            address: data.address
+                            address: deliveryAddress
                         };
 
+                        // make API request
                         createOrder(userId, token, orderData);
-
                         setData({ ...data, success: response.success });
                         emptyCart(()=> {
                           setRun(!run); // update parent state to show cart empty
                           console.log('payment successful, cart empty');
-                          setData( { loading: false } );
+                          setData( { loading: false, success: true } );
 
                         })
                     })
