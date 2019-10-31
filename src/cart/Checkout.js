@@ -130,7 +130,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
             {data.clientToken !== null && products.length > 0 ? (
                 <div>
                     <div className='form-group mb-3'>
-                        <label className='text-muted' for='address'> Delivery address:</label>
+                        <label className='text-muted' htmlFor='address'> Delivery address:</label>
                         <textarea //TODO update address object to use individual fields for Street,City,Country, Zip
                             className='form-control'
                             id='address'
