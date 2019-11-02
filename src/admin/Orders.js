@@ -40,7 +40,18 @@ const Orders = () => {
     } else {
       return <h2 className='text-danger'> No orders at this time.</h2>
     }
-  }
+  };
+
+  const showProductDetails = (key, value) => (
+
+
+      <div className='input-group mb-2 mr-sm-2'>
+        <div className='input-group-prepend'>
+          <div className='input-group-text'>{key}</div>
+        </div>
+        <input type='text' value={value} className='form-control' readOnly />
+      </div>
+  );
 
     return (
     <Layout title='Orders' description='Manage Orders here quickly and easily'>
@@ -51,9 +62,9 @@ const Orders = () => {
           {orders.map((order) => {
               return (
                 <div className='mt-5' key={order._id} style={{borderBottom: '5px solid indigo'}}>
-                  <h3 className='mb-5'>
+                  <h4 className='mb-5'>
                     <span> Order ID: {order._id}</span>
-                  </h3>
+                  </h4>
                   <ul className='list-group mb-2'>
                     <li className='list-group-item'>{order.status}</li>
                     <li className='list-group-item'>Transaction ID: {order.transaction_id}</li>
@@ -63,11 +74,20 @@ const Orders = () => {
                     <li className='list-group-item'> Delivery Address: {order.address}</li>
                   </ul>
 
-                  <h4 className='mt-4 mb-4 font-italic'>
+                  <h5 className='mt-4 mb-4 font-italic'>
                     Total products in order: {order.products.length}
-                  </h4>
+                  </h5>
+
+                  {order.products.map((product) => (
+                    <div className='mb-4' key={product._id} style={{padding: '20px', border: '1px solid indigo'}}>
+                      {showProductDetails('Product Name', product.name)}
+                      {showProductDetails('Price', product.price)}
+                      {showProductDetails('Quantity', product.count)}
+                      {showProductDetails('Product ID', product._id)}
+                    </div>
+                  ))}
                 </div>
-              )
+              );
             }
           )}
         </div>
