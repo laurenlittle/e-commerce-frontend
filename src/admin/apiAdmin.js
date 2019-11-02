@@ -46,3 +46,20 @@ export const getCategories = () => {
     console.log(error);
   })
 };
+
+export const listOrders = (userId, userToken) => {
+  return fetch(`${API}/order/list/${userId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        "Content-Type": 'application/json',
+        Authorization: `Bearer ${userToken}`
+      }
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+      console.log(error);
+    })
+};
