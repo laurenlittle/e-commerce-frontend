@@ -38,7 +38,6 @@ export const updateProfile = (userId, userToken, userData) => {
 
 // Create method so user will see updated Profile info right away
 // (i.e update local storage so user doesn't need to signout/signin)
-
 export const updateUserLocalStorage = (user, next) => {
   if(typeof window !== 'undefined') {
     if(localStorage.getItem('jwt')) {
@@ -48,4 +47,21 @@ export const updateUserLocalStorage = (user, next) => {
       next(); // exec callback to redirect user
     }
   }
-}
+};
+
+export const getPurchaseHistory = (userId, userToken) => {
+  return fetch(`${API}/orders/by/user/${userId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        "Content-Type": 'application/json',
+        Authorization: `Bearer ${userToken}`
+      }
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+      console.log(error);
+    })
+};
