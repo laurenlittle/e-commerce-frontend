@@ -63,3 +63,21 @@ export const listOrders = (userId, userToken) => {
       console.log(error);
     })
 };
+
+export const getStatusValues = (userId, userToken) => {
+  return fetch(`${API}/order/status-values/${userId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        "Content-Type": 'application/json',
+        Authorization: `Bearer ${userToken}`
+      }
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+      console.log(error);
+    })
+};
+

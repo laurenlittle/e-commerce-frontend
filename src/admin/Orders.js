@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth/index';
-import { listOrders } from './apiAdmin';
+import { listOrders, getStatusValues } from './apiAdmin';
 import moment from 'moment';
 
 
@@ -10,7 +10,7 @@ const Orders = () => {
 
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+  const [statusValues, setStatusValues] = useState([]);
 
   const userId = isAuthenticated() && isAuthenticated().user._id;
   const token = isAuthenticated() && isAuthenticated().token;
@@ -27,9 +27,21 @@ const Orders = () => {
     });
   };
 
+  const loadStatusValues = (userId, token) => {
+    // make API request
+    getStatusValues(userId, token)
+    .then(data => {
+      if(data.error) {
+        setError({error: data.error})
+      } else {
+        setStatusValues(data);
+      }
+    });
+  };
 
   useEffect(() => {
     loadOrders(userId, token);
+    loadStatusValues(userId, token);
   }, []);
 
   const showOrdersLength = () => {
@@ -43,14 +55,27 @@ const Orders = () => {
   };
 
   const showProductDetails = (key, value) => (
-
-
       <div className='input-group mb-2 mr-sm-2'>
         <div className='input-group-prepend'>
           <div className='input-group-text'>{key}</div>
         </div>
         <input type='text' value={value} className='form-control' readOnly />
       </div>
+  );
+
+  const handleStatusChange = (e, orderId) => {
+    // do stuff
+    console.log('update order status')
+  };
+
+  const showOrderStatus = order => (
+    <div className='form-group'>
+      <h4 className='mark mb-4'>Status: {order.status}</h4>
+      <select className='form-control' onChange={(e) => (handleStatusChange(e, order._id))}>
+        <option>Update Status</option>
+        {statusValues.map((status, i) => (<option key={i} value={status}>{status}</option>))}
+      </select>
+    </div>
   );
 
     return (
@@ -66,7 +91,7 @@ const Orders = () => {
                     <span> Order ID: {order._id}</span>
                   </h4>
                   <ul className='list-group mb-2'>
-                    <li className='list-group-item'>{order.status}</li>
+                    <li className='list-group-item'>{showOrderStatus(order)}</li>
                     <li className='list-group-item'>Transaction ID: {order.transaction_id}</li>
                     <li className='list-group-item'> Amount: {order.amount}</li>
                     <li className='list-group-item'> Ordered by: {order.user.name}</li>
