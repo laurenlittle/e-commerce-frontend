@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth/index';
+import { getPurchaseHistory } from './apiUser';
+import moment from 'moment';
 
 const UserDashboard = () => {
 
   // const {user} = isAuthenticated(); user._id, user.name, user.email, user.role
   const { user: { _id, name, email, role } } = isAuthenticated();
+  const { token } = isAuthenticated();
+
+  const [purchaseHistory, setHistory] = useState([]);
+
+  const init = (userId, token) => {
+    // make API
+    getPurchaseHistory(userId, token)
+    .then(data => {
+      if(data.error) {
+        console.log(data.error);
+      } else {
+        setHistory(data);
+      }
+    })
+  };
+
+  useEffect(() => {
+    init(_id, token);
+  }, []);
 
   const userLinks = () => {
     return(
@@ -43,8 +64,28 @@ const UserDashboard = () => {
     return (
       <div className='card mb-5'>
         <h3 className='card-header'>Purchase History</h3>
+
          <ul className='list-group'>
-          <li className='list-group-item'>History</li>
+          <li className='list-group-item'>
+            {
+              purchaseHistory.map((history) => {
+                return (
+                  <>
+                    <hr/>
+                    <h6>Date Purchased: {moment(history.createdAt).fromNow()} </h6>
+                    {history.products.map(product => {
+                      return (
+                          <div key={product._id}>
+                            <h6>Product Name: {product.name} </h6>
+                            <h6>Price: ${product.price} </h6>
+                          </div>
+                      )
+                    })}
+                  </>
+                )
+              })
+            }
+          </li>
         </ul>
 
       </div>
