@@ -81,3 +81,21 @@ export const getStatusValues = (userId, userToken) => {
     })
 };
 
+export const updateOrderStatus = (userId, userToken, orderId, status) => {
+  return fetch(`${API}/order/${orderId}/status/${userId}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        "Content-Type": 'application/json',
+        Authorization: `Bearer ${userToken}`
+      },
+      body: JSON.stringify({status, orderId}) // sent as JSON
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+      console.log(error);
+    })
+};
+

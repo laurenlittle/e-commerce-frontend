@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth/index';
-import { listOrders, getStatusValues } from './apiAdmin';
+import { listOrders, getStatusValues, updateOrderStatus } from './apiAdmin';
 import moment from 'moment';
 
 
@@ -64,8 +64,16 @@ const Orders = () => {
   );
 
   const handleStatusChange = (e, orderId) => {
-    // do stuff
-    console.log('update order status')
+   // make API request
+   updateOrderStatus(userId, token, orderId, e.target.value)
+   .then(data => {
+     if(data.error) {
+        setError({error: data.error});
+        console.log('Status update failed.', error);
+     } else {
+       loadOrders(userId, token); // Status changed and will be reflected in UI immediately
+     }
+   })
   };
 
   const showOrderStatus = order => (
