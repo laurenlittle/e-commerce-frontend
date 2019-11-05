@@ -130,7 +130,6 @@ export const updateProduct = (productId, userId, userToken, productData) => {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
-        "Content-Type": 'application/json',
         Authorization: `Bearer ${userToken}`
       },
       body: productData // sent as form data (not JSON)
