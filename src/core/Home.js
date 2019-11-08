@@ -43,13 +43,13 @@ const Home = () => {
   }, []);
 
  return (
-  <Layout title='Home' description='Node React E-Commerce App' className='container-fluid'>
+  <Layout title='Tis the Season for giving' description='Shop todays deals! New items added every day.' className='container-fluid'>
     <Search />
     <h2 className='mb-4'>New Arrivals</h2>
     <div className='row'>
       {
         productsbyArrival.map(product => (
-          <div className='col-4 mb-3' key={product._id}>
+          <div className='col-sm-4 mb-3' key={product._id}>
              <Card product={product} />
           </div>
           )
@@ -61,7 +61,7 @@ const Home = () => {
     <div className='row'>
       {
         productsSold.map(product => (
-          <div className='col-4 mb-3' key={product._id}>
+          <div className='col-sm-4 mb-3' key={product._id}>
             <Card product={product} />
           </div>
         ))

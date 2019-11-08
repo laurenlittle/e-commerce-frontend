@@ -6,9 +6,9 @@ import { getItemTotal } from '../cart/helpers/cartHelpers';
 const isActive = (history, path) => {
 
   if(history.location.pathname === path) {
-    return { color: '#ff9900' }
+    return { color: '#FF0745' }
   } else {
-    return { color: '#fff' }
+    return { color: '#39423E' }
   }
 }
 
@@ -16,12 +16,12 @@ const isActive = (history, path) => {
 
 const Menu = ({history}) => (
   <div>
-    <ul className='nav nav-tabs bg-primary'>
+    <ul className='nav justify-content-end'>
       <li className='nav-item'>
         <Link className='nav-link' style={isActive(history, '/')} to='/'>Home</Link>
       </li>
       <li className='nav-item'>
-        <Link className='nav-link' style={isActive(history, '/')} to='/shop'>Shop</Link>
+        <Link className='nav-link' style={isActive(history, '/shop')} to='/shop'>Shop</Link>
       </li>
 
       { isAuthenticated() && isAuthenticated().user.role === 0 && (
@@ -51,7 +51,7 @@ const Menu = ({history}) => (
 
       { isAuthenticated() && (
         <li className='nav-item'>
-          <span className='nav-link' style={{cursor: 'pointer', color: '#fff'}}
+          <span className='nav-link' style={{cursor: 'pointer', color: '#FF0745'}}
             onClick={() => signout(() => {
               history.push('/');
             })}
