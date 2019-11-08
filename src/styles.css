@@ -2,8 +2,15 @@
  *   Global Styles
  * --------------------- */
 
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+
+body,
+html  {
+  box-sizing: border-box;
+  font: 1.2rem 'Nunito', sans-serif;
+}
+
 .btn,
-.nav-link,
 .jumbotron {
   border-radius: 0;
 }
@@ -15,59 +22,16 @@
 
 .jumbotron {
   width: 30wh;
-  height: 30vh;
+  height: 75vh;
   color: #fff;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  -webkit-animation: Gradient 15s ease infinite;
-  -moz-animation: Gradient 15s ease infinite;
-  animation: Gradient 15s ease infinite;
-}
-
-@-webkit-keyframes Gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@-moz-keyframes Gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes Gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)), url('./images/bags.jpg');
+  background-size: cover;
 }
 
 .jumbotron h2 {
   margin-top: 10px;
+  font-weight: 700;
 }
 
 @media only screen and (min-width: 768px) {
@@ -86,7 +50,7 @@
 }
 
 .name {
-  background: indigo;
+  background: #39423e;
   color: white;
   font-weight: bold;
 }
@@ -115,6 +79,6 @@
   padding: 3px;
   font-size: 12px;
   font-weight: bold;
-  background: #fff;
-  color: #007bff;
+  background: #39423E;
+  color: #fff;
 }
