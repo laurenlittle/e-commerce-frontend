@@ -50,7 +50,8 @@ html  {
 }
 
 .name {
-  background: #39423e;
+  /* background: #39423e; */
+  background: #FF0745;
   color: white;
   font-weight: bold;
 }
@@ -80,5 +81,34 @@ html  {
   font-size: 12px;
   font-weight: bold;
   background: #39423E;
+  color: #fff;
+}
+
+.primary-btn {
+  background: #fff;
+  color: #008ED6;
+  border: 1px solid #008ED6;
+}
+
+.primary-btn:hover {
+  transition: 0.5s;
+  background: #008ED6;
+  color: #fff;
+}
+
+.secondary-btn {
+  background: #fff;
+  color: #FF0745;
+  border: 1px solid #FF0745;
+}
+
+.secondary-btn:hover {
+  transition: 0.5s;
+  background: #FF0745;
+  color: #fff;
+}
+
+.badge-stock-in {
+  background: #99D600;
   color: #fff;
 }
