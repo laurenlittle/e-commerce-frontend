@@ -29,6 +29,7 @@ const Shop = () => {
       .then(data => {
         if (data.error) {
           setError(data.error);
+          console.log(error);
         } else {
           setCategories(data.categories);
         }
@@ -68,7 +69,7 @@ const Shop = () => {
   const loadMoreButton = () => {
     return (
       size > 0 && size >= limit && (
-        <button onClick={loadMore} className='btn btn-secondary'>Load More</button>
+        <button onClick={loadMore} className='btn secondary-btn'>Load More</button>
       )
     )
   }
@@ -116,10 +117,10 @@ const Shop = () => {
 
 
   return (
-  <Layout title='Shop' description='Books for all your programming needs' className='container-fluid'>
+  <Layout title='Shop Now!' description='Gifts for everyone, all in one place.' className='container-fluid'>
 
     <div className='row'>
-      <div className='col-4'>
+      <div className='col-sm-4'>
         <h4>Filter by Category</h4>
         <ul>
           <Checkbox categories={categories} handleFilters={filters => handleFilters(filters, 'category')} />
@@ -132,12 +133,12 @@ const Shop = () => {
 
       </div>
 
-      <div className='col-8'>
+      <div className='col-sm-8'>
         <h2 className='mb-4'> Products</h2>
          <div className='row'>
           {
             filteredResults.map(result => (
-              <div className='col-4 mb-3' key={result._id}>
+              <div className='col-sm-4 mb-3' key={result._id}>
                <Card product={result}/>
               </div>
             ))
